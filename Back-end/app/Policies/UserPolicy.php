@@ -12,7 +12,8 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        //
+            return $user->role === 'admin';
+
     }
 
     /**
@@ -37,17 +38,15 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        //
+        return $user->role === 'admin';
     }
-
     /**
      * Determine whether the user can delete the model.
      */
     public function delete(User $user, User $model)
     {
-        //
+        return $user->role === 'admin';
     }
-
     /**
      * Determine whether the user can restore the model.
      */

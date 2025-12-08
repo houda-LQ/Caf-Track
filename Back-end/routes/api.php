@@ -60,3 +60,12 @@ Route::delete('suppliers/delete/{supplier}', [SupplierController::class, 'destro
 Route::get('purchases/list', [PurchaseController::class, 'index']);     
 Route::post('purchases', [PurchaseController::class, 'store']); 
 });
+
+
+//Gestion des Utilisateurs
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('users/list', [UserController::class, 'index']);
+    Route::post('users', [UserController::class, 'store']);
+    Route::put('users/{user}', [UserController::class, 'update']);
+     Route::delete('users/delete/{user}', [UserController::class, 'destroy']);
+});
