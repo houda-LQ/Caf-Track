@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -48,3 +50,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('sales', [SaleController::class, 'store']);
 });
 
+//Fournisseurs & Achats
+Route::middleware('auth:sanctum')->group(function () {
+Route::get('suppliers', [SupplierController::class, 'index']);      
+Route::post('suppliers', [SupplierController::class, 'store']);     
+Route::put('suppliers/{supplier}', [SupplierController::class, 'update']); 
+Route::delete('suppliers/delete/{supplier}', [SupplierController::class, 'destroy']); 
+
+Route::get('purchases/list', [PurchaseController::class, 'index']);     
+Route::post('purchases', [PurchaseController::class, 'store']); 
+});

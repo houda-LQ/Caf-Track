@@ -51,9 +51,10 @@ class Product extends Model
 
 // Décrémenter le stock
 public function decrementStock($quantity)
-    {
-        $this->stock -= $quantity;
-        $this->save();
-    }
+{
+    $this->quantity -= $quantity;
+    $this->save();
+}
+
 
 }

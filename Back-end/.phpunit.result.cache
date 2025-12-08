@@ -1,1 +1,1 @@
-{"version":2,"defects":[],"times":{"Tests\\Unit\\ExampleTest::test_that_true_is_true":1.125,"Tests\\Feature\\ExampleTest::test_the_application_returns_a_successful_response":6.196}}
+{"version":2,"defects":[],"times":{"Tests\\Unit\\ExampleTest::test_that_true_is_true":0.998,"Tests\\Feature\\ExampleTest::test_the_application_returns_a_successful_response":1.358,"Tests\\Feature\\PurchaseTest::product_quantity_updates_after_purchase":0.151}}
