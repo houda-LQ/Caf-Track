@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,5 +37,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('products/check-stock/{id}', [ProductController::class, 'checkStock']);
     Route::get('products/category/{category}', [ProductController::class, 'filterByCategory']);
+});
+
+
+//getion de ventes
+Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::get('sales', [SaleController::class, 'index']);
+    Route::get('sales/stats', [SaleController::class, 'dashboardStats']);
+    Route::post('sales', [SaleController::class, 'store']);
 });
 

@@ -33,7 +33,7 @@ class Product extends Model
     }
 
 
-
+//Affiche status du prod
     public function getStatusAttribute()
    {
     if ($this->quantity <= $this->alert) {
@@ -43,9 +43,17 @@ class Product extends Model
     return 'En stock';
   }
 
+  //calcule margin
   public function getMarginAttribute()
 {
     return $this->sale_price - $this->purchase_price;
 }
+
+// Décrémenter le stock
+public function decrementStock($quantity)
+    {
+        $this->stock -= $quantity;
+        $this->save();
+    }
 
 }

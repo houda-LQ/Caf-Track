@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -64,3 +65,89 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+=======
+﻿# CaféTrack
+
+Application web Full-Stack (React.js + Laravel) destinée à la gestion des stocks, des ventes et des fournisseurs pour un Coffee Shop.
+
+---
+
+## Objectif du projet
+Digitaliser et optimiser la gestion d’un coffee shop grâce à une application moderne permettant :
+
+- Gestion des stocks et alertes automatiques  
+- Suivi des ventes et calcul des marges  
+- Gestion des fournisseurs  
+- Dashboard analytique  
+- Gestion des rôles (Admin, Employé)
+
+---
+
+## Cahier des charges
+Le document complet du cahier des charges décrit :
+
+- Le contexte du projet  
+- Les objectifs  
+- Les rôles utilisateurs  
+- Les user stories  
+- Les pages à développer  
+- Les technologies utilisées  
+
+https://docs.google.com/document/d/1hM7IVaGWNdyRWsL_jktFRK_pyzrxa15UaLdFtGpP9Y8/edit?usp=sharing
+
+---
+
+## Liens importants
+
+### Jira (Gestion du projet)
+
+https://houdaloqmane02.atlassian.net/jira/software/projects/SCRUM/boards/1?atlOrigin=eyJpIjoiNTQwNjEyZDRkNmY1NDQzZjg2ZDdiNjg3ZDZjNGRjYjMiLCJwIjoiaiJ9
+
+### Diagrammes UML  
+- Diagramme de cas d’utilisation : 
+https://lucid.app/lucidchart/cd8c9695-c15e-47f2-a506-b58d9101a873/edit?invitationId=inv_88a1b7ce-0c58-481a-b35c-cff8f41d3af7
+
+- Diagramme de classes  :
+https://lucid.app/lucidchart/0c11c790-07b7-497b-9fb6-fe97d4e2fb75/edit?invitationId=inv_1945ce8a-52b6-4eba-8432-01ca1fe2b0a1
+
+### Figma:
+
+https://www.figma.com/design/jOJ9G0jsZ1JOUj3jPV9Sds/Untitled?node-id=0-1&t=XJ7g0iccXuHUH6u2-1
+
+---
+
+## Technologies prévues
+
+### **Frontend**
+- React.js  
+- Tailwind CSS  
+- Redux Toolkit  
+- React Router  
+
+### **Backend**
+- Laravel 10  
+- Sanctum  
+
+### **Base de données**
+- MySQL
+
+### **Tests & API**
+- PHPUnit  
+- Postman  
+
+---
+
+## Fonctionnalités principales
+- CRUD Produits / Fournisseurs / Ventes / Utilisateurs  
+- Dashboard analytique  
+- Alertes de stock  
+- Sécurité & permissions  
+
+---
+
+## Auteur
+Projet développé par **Houda LQ** dans le cadre de sa formation.
+
+
+
+>>>>>>> 5936af8a94d2a7cedfc28580db9a365dee6ce594
