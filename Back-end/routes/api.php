@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -68,4 +69,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('users', [UserController::class, 'store']);
     Route::put('users/{user}', [UserController::class, 'update']);
      Route::delete('users/delete/{user}', [UserController::class, 'destroy']);
+});
+
+//  paramètres
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/settings', [SettingController::class, 'index']);
+    Route::post('/settings/{setting}', [SettingController::class, 'update']);
 });
