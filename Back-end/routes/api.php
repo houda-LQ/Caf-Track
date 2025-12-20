@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
@@ -73,6 +74,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
 //  paramètres
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/settings', [SettingController::class, 'index']);
-    Route::post('/settings/{setting}', [SettingController::class, 'update']);
+    Route::get('settings', [SettingController::class, 'index']);
+    Route::post('settings/{setting}', [SettingController::class, 'update']);
 });
+
+
+Route::middleware('auth:sanctum')->get('dashboard', [DashboardController::class, 'index']);

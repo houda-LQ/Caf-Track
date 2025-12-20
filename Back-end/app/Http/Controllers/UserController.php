@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\EmployeCreated;
 use App\Http\Requests\StoreEmployeRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
@@ -20,6 +21,8 @@ class UserController extends Controller
         'password' => Hash::make($request->password),
         'role' => 'employe',
     ]);
+
+        // event(new EmployeCreated($user));
 
     return response()->json([
         'message' => 'Employé créé avec succès',
