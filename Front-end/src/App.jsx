@@ -2,41 +2,32 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Products from "./pages/Products";
 import Dashboard from "./pages/Dashboard";
+import Sales from "./pages/Sales"; 
 import ProtectedRoute from "./components/ProtectedRoute";
 import DashboardLayout from "./layout/DashboardLayout";
 
 export default function App() {
   return (
     <Routes>
-      {/* Login page sans sidebar */}
+      
+      {/* Page login */}
       <Route path="/" element={<Login />} />
 
-      {/* Dashboard page protégée avec sidebar */}
+      {/* Routes protégées avec layout */}
       <Route
-        path="/dashboard"
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              <Dashboard />
-            </DashboardLayout>
+            <DashboardLayout />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/sales" element={<Sales />} />  
+      </Route>
 
-      {/* Produits avec sidebar */}
-      <Route
-        path="/products"
-        element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <Products />
-            </DashboardLayout>
-          </ProtectedRoute>
-        }
-      />
-
-      {/* Ajouter ici les autres pages protégées */}
-      {/* /sales, /suppliers, /users, /settings */}
+      {/* Page si l'utilisateur n'a pas le rôle */}
+      <Route path="/unauthorized" element={<h1>Accès refusé</h1>} />
     </Routes>
   );
 }
