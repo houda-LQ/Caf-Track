@@ -1,19 +1,17 @@
 import { FiFilter } from "react-icons/fi";
-import { useSalesStore } from "../../store/salesStore";
 
-export default function SalesFilter() {
-  const { setFilter } = useSalesStore();
-
+export default function SalesFilter({ filter, setFilter }) {
   return (
-    <div className="mb-6 w-full max-w-full bg-[#ECEFF1] rounded-lg shadow-md border border-white p-4 flex items-center space-x-3">
-      <label className="font-medium text-gray-700 flex items-center space-x-2 mb-2">
-        <FiFilter className="text-gray-600" />
+    <div className="mb-6 bg-[#ECEFF1] rounded-lg p-4 flex items-center space-x-3">
+      <label className="flex items-center space-x-2 text-gray-700">
+        <FiFilter />
         <span>Période</span>
       </label>
 
       <select
+        value={filter}
         onChange={(e) => setFilter(e.target.value)}
-        className="w-full bg-[#E4B385]  text-[#704232] px-4 py-2 rounded-lg border border-[#d9a47e50]  outline-none cursor-pointer"
+        className="flex-1 bg-[#E4B385] border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-[#704232] "
       >
         <option value="all">Toutes les ventes</option>
         <option value="today">Aujourd’hui</option>

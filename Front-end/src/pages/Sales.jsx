@@ -9,12 +9,15 @@ import SaleForm from "../components/sales/SaleForm";
 
 export default function Sales() {
   const { fetchSales, fetchStats } = useSalesStore();
-  const [isFormOpen, setIsFormOpen] = useState(false);
 
-  useEffect(() => {
-    fetchSales();
-    fetchStats();
-  }, []);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [filter, setFilter] = useState("all");
+
+ useEffect(() => {
+  fetchSales(filter);
+  fetchStats(filter);
+}, [filter, fetchSales, fetchStats]);
+
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -30,7 +33,7 @@ export default function Sales() {
       </div>
 
       <SalesCards />
-      <SalesFilter />
+      <SalesFilter filter={filter} setFilter={setFilter} />
       <SalesTable />
 
       {isFormOpen && <SaleForm onClose={() => setIsFormOpen(false)} />}

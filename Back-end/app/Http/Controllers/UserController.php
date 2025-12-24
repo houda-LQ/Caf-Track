@@ -19,10 +19,10 @@ class UserController extends Controller
         'name' => $request->name,
         'email' => $request->email,
         'password' => Hash::make($request->password),
-        'role' => 'employe',
+        'role' => $request->role ?? 'employe'
     ]);
 
-        // event(new EmployeCreated($user));
+        event(new EmployeCreated($user));
 
     return response()->json([
         'message' => 'Employé créé avec succès',

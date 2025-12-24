@@ -26,6 +26,8 @@ class StoreEmployeRequest extends FormRequest
         'name' => 'required|string|max:25',
         'email' => 'required|email|unique:users,email',
         'password' => 'required|min:6',
+        'role' => 'nullable|in:admin,employe',
+
     ];
     }
 }

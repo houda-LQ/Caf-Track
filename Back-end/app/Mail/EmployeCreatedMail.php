@@ -20,7 +20,12 @@ class EmployeCreatedMail extends Mailable
 
     public function build()
     {
-        return $this->subject("Bienvenue dans CaféTrack")
-                    ->view('emails.employe-created');
+        return $this
+            ->subject('Bienvenue dans CaféTrack')
+            ->html("
+                <h1>Bienvenue {$this->user->name}</h1>
+                <p>Votre compte a été créé avec succès.</p>
+                <p><strong>Email :</strong> {$this->user->email}</p>
+            ");
     }
 }
