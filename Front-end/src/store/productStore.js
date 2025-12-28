@@ -1,11 +1,8 @@
 import { create } from "zustand";
-import api from "../lib/axios"; // ✅ utilise le default export
+import api from "../lib/axios";
 
 export const useProductStore = create((set, get) => ({
   products: [],
-  userRole: "admin", 
-
-  setUserRole: (role) => set({ userRole: role }),
 
   fetchProducts: async () => {
     const res = await api.get("/products");
@@ -20,21 +17,19 @@ export const useProductStore = create((set, get) => ({
     set({ products: res.data });
   },
 
- createProduct: async (data) => {
-  const res = await api.post("/products", data);
-  set({ products: [...get().products, res.data.product] });
-},
-
+  createProduct: async (data) => {
+    const res = await api.post("/products", data);
+    set({ products: [...get().products, res.data.product] });
+  },
 
   updateProduct: async (id, data) => {
-  const res = await api.put(`/products/${id}`, data);
-  set({
-    products: get().products.map((p) =>
-      p.id === id ? res.data.product || res.data : p
-    ),
-  });
-},
-
+    const res = await api.put(`/products/${id}`, data);
+    set({
+      products: get().products.map((p) =>
+        p.id === id ? res.data.product : p
+      ),
+    });
+  },
 
   deleteProduct: async (id) => {
     await api.delete(`/products/${id}`);

@@ -73,10 +73,10 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 //  paramètres
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('settings', [SettingController::class, 'index']);
-    Route::post('settings/{setting}', [SettingController::class, 'update']);
-});
+// Route::middleware('auth:sanctum')->group(function () {
+//     Route::get('settings', [SettingController::class, 'index']);
+//     Route::put('settings/{setting}', [SettingController::class, 'update']);
+// });
 
 
 Route::middleware('auth:sanctum')->get('dashboard', [DashboardController::class, 'index']);

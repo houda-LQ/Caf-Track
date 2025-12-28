@@ -11,22 +11,28 @@ class SaleController extends Controller
 {
 
 
-    public function index(Request $request)
+   public function index(Request $request)
 {
-    
-     $user = auth()->user();
-
-     $this->authorize('viewAny', Sale::class);
+    $user = auth()->user();
+    $this->authorize('viewAny', Sale::class);
 
     $query = Sale::with('product')->orderBy('sale_date', 'desc');
 
-     // Filtrer les ventes selon chaue employe
-     if ($user->role === 'employe') {
+    // Filtrer par utilisateur si employé
+    if ($user->role === 'employe') {
         $query->where('created_by', $user->id);
     }
 
-    if ($request->has('from') && $request->has('to')) {
-        $query->whereBetween('sale_date', [$request->from, $request->to]);
+    // Filtrer selon la période
+    $period = $request->query('period', 'all');
+
+    if ($period === 'today') {
+        $query->whereDate('sale_date', now());
+    } elseif ($period === 'week') {
+        $query->whereBetween('sale_date', [now()->startOfWeek(), now()->endOfWeek()]);
+    } elseif ($period === 'month') {
+        $query->whereMonth('sale_date', now()->month)
+              ->whereYear('sale_date', now()->year);
     }
 
     $sales = $query->get();
@@ -34,18 +40,24 @@ class SaleController extends Controller
     return response()->json($sales, 200);
 }
 
-
 public function dashboardStats(Request $request)
 {
     $user = auth()->user();
-
     $query = Sale::query();
-    
+
     if ($user->role === 'employe') {
-    $query->where('created_by', $user->id);
-}
-    if ($request->has('from') && $request->has('to')) {
-        $query->whereBetween('sale_date', [$request->from, $request->to]);
+        $query->where('created_by', $user->id);
+    }
+
+    $period = $request->query('period', 'all');
+
+    if ($period === 'today') {
+        $query->whereDate('sale_date', now());
+    } elseif ($period === 'week') {
+        $query->whereBetween('sale_date', [now()->startOfWeek(), now()->endOfWeek()]);
+    } elseif ($period === 'month') {
+        $query->whereMonth('sale_date', now()->month)
+              ->whereYear('sale_date', now()->year);
     }
 
     return response()->json([
@@ -54,36 +66,5 @@ public function dashboardStats(Request $request)
         'benefice_net' => $query->sum('margin'),
     ], 200);
 }
-
-
-
- public function store(StoreSaleRequest $request)
-{
-
-    $this->authorize('create', Sale::class);
-
-    $product = Product::findOrFail($request->product_id);
-
-    $total = Sale::calculateTotal($product->sale_price, $request->quantity);
-    $margin = Sale::calculateMargin($product->margin, $request->quantity);
-
-    $sale = Sale::create([
-        'product_id' => $product->id,
-        'client_name' => $request->client_name,
-        'quantity' => $request->quantity,
-        'unit_price' => $product->sale_price,
-        'total' => $total,
-        'margin' => $margin,
-        'sale_date' => now()->toDateString(),
-        'created_by' => auth()->id(),
-    ]);
-
-    $product->decrementStock($request->quantity);
-
-    return response()->json([
-        'message' => 'Vente enregistrée avec succès',
-        'sale' => $sale
-    ], 201);
-    }
 
 }

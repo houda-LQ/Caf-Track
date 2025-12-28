@@ -4,13 +4,16 @@ import ProductTable from "../components/products/ProductTable";
 import ProductForm from "../components/products/ProductForm";
 import CategoryFilter from "../components/products/CategoryFilter";
 import { FiPlus } from "react-icons/fi";
+import { useAuthStore } from "../store/authStore";
+
 
 export default function Products() {
-  const { userRole, fetchProducts, createProduct, updateProduct } = useProductStore();
+  const { fetchProducts, createProduct, updateProduct } = useProductStore();
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-
+  const { user } = useAuthStore();
+  
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -41,14 +44,16 @@ export default function Products() {
         {/* <p className="text-gray-500 mt-1">Gérez votre inventaire et surveillez vos stocks</p> */}
 
 
-        {userRole === "admin" && (
-          <button
-            className="flex items-center bg-[#704232] hover:bg-amber-800 text-white px-4 py-2 rounded"
-            onClick={openAddForm}
-          >
-            <FiPlus className="mr-2" /> Ajouter un Produit
-          </button>
-        )}
+       {user?.role === "admin" && (
+  <button
+    className="flex items-center bg-[#704232] hover:bg-amber-800 text-white px-4 py-2 rounded"
+    onClick={openAddForm}
+  >
+    <FiPlus className="mr-2" />
+    Ajouter un Produit
+  </button>
+)}
+
       </div>
 
       <CategoryFilter />

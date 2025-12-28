@@ -1,23 +1,38 @@
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer, Legend } from "recharts";
 
-const COLORS = ["#FF6B6B", "#4B3832", "#10B981", "#F59E0B"];
+const COLORS = ["#704232", "#FBBF24", "#10B981", "#3B82F6", "#F87171"];
 
-export default function CategoryPieChart({ data = [] }) {
-  if (!data.length) return <p className="p-6">Pas de données</p>;
+export default function CategoryPieChart({ data }) {
+  if (!data || data.length === 0) return <div>Chargement...</div>;
+
+  // Si toutes les valeurs sont 0, afficher un message
+  const totalSum = data.reduce((sum, d) => sum + d.total, 0);
+  if (totalSum === 0) return <div>Aucune donnée à afficher</div>;
 
   return (
-    <div className="bg-cream p-6 rounded-xl shadow-md hover:shadow-lg transition">
-      <h2 className="text-gray-700 font-semibold mb-4">Répartition par Catégorie</h2>
-      <ResponsiveContainer width="100%" height={250}>
-        <PieChart>
-          <Pie data={data} dataKey="total_sales" nameKey="category" outerRadius={80} label>
-            {data.map((_, index) => (
-              <Cell key={index} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-          <Tooltip />
-        </PieChart>
-      </ResponsiveContainer>
+        <div className="bg-white rounded-xl shadow p-4">
+      <h3 className="font-semibold mb-2">Ventes par catégorie</h3>
+
+    <ResponsiveContainer width="100%" height={300}>
+      <PieChart>
+        <Pie
+          dataKey="total"
+          nameKey="category"
+          data={data}
+          cx="50%"
+          cy="50%"
+          outerRadius={100}
+          fill="#704232"
+          label
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip formatter={(value) => `${value} MAD`} />
+        <Legend verticalAlign="bottom" height={36} />
+      </PieChart>
+    </ResponsiveContainer>
     </div>
   );
 }

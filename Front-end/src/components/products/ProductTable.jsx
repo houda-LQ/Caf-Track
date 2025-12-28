@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { useProductStore } from "../../store/productStore";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { useAuthStore } from "../../store/authStore";
 
 export default function ProductTable({ onEdit }) {
-  const { products, userRole, deleteProduct } = useProductStore();
+  const { products,deleteProduct } = useProductStore();
+  const { user } = useAuthStore();  
+  const userRole = user?.role;
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // nombre de produits par page
+  const itemsPerPage = 5; 
   const totalPages = Math.ceil(products.length / itemsPerPage);
 
   const paginatedProducts = products.slice(
@@ -62,6 +65,7 @@ export default function ProductTable({ onEdit }) {
                   {p.sale_price - p.purchase_price} DH
                 </td>
                 <td className="px-6 py-4">{statusBadge(p)}</td>
+                
                 {userRole === "admin" && (
                   <td className="px-6 py-4 flex items-center space-x-3">
                     <button

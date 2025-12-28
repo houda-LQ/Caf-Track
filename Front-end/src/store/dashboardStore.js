@@ -1,41 +1,26 @@
-// src/store/dashboardStore.js
 import { create } from "zustand";
 import api from "../lib/axios";
 
 export const useDashboardStore = create((set) => ({
-  loading: false,
-  error: null,
-  data: null,
+  loading: false,          
+  cards: {},                 
+  charts: {},               
+  stocksFaibles: [],         
 
-  charts: {
-    top5Products: [],
-    last7Days: [],
-    categorySales: [],
-  },
-
+  // fonction pour récupérer les données du dashboard
   fetchDashboard: async () => {
-    set({ loading: true, error: null });
-
+    set({ loading: true });  
     try {
-      const [dashboardRes, statsRes] = await Promise.all([
-        api.get("/dashboard"),
-        api.get("/sales/stats"),
-      ]);
-
+      const res = await api.get("/dashboard"); 
       set({
-        data: dashboardRes.data,
-        charts: {
-          top5Products: statsRes.data.top5Products,
-          last7Days: statsRes.data.last7Days,
-          categorySales: statsRes.data.categorySales,
-        },
-        loading: false,
+        cards: res.data.cards,
+        charts: res.data.charts,
+        stocksFaibles: res.data.stocksFaibles,
+        loading: false,      
       });
     } catch (err) {
-      set({
-        error: err.response?.data?.message || "Erreur dashboard",
-        loading: false,
-      });
+      console.error("Erreur fetchDashboard:", err);
+      set({ loading: false }); 
     }
   },
 }));

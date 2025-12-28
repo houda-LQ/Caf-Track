@@ -12,7 +12,5 @@ class Setting extends Model
       protected $fillable = [
         'shop_name',
         'logo',
-        'tva_rate',
-        'min_stock',
     ];
 }

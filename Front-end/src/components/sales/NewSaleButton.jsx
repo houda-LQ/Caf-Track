@@ -1,10 +1,11 @@
+// src/components/sales/NewSaleButton.jsx
 import { FiPlus } from "react-icons/fi";
-import { useProductStore } from "../../store/productStore";
+import { useAuthStore } from "../../store/authStore";
 
 export default function NewSaleButton({ onClick }) {
-  const { userRole } = useProductStore();
+  const { user } = useAuthStore();
 
-  if (userRole !== "employe") return null;
+  if (user?.role !== "employe") return null;
 
   return (
     <button

@@ -4,6 +4,7 @@ import { useUsersStore } from "../store/useUsersStore";
 import UsersCards from "../components/users/UsersCards";
 import UsersTable from "../components/users/UsersTable";
 import UserForm from "../components/users/UserForm";
+import { FiPlus } from "react-icons/fi";
 
 export default function Users() {
   const { users, totals, fetchUsers, createUser, updateUser, deleteUser } =
@@ -45,6 +46,7 @@ export default function Users() {
     <div className="p-6 bg-gray-100 min-h-screen">
       <div className="flex justify-between items-start mb-4">
         <div>
+        
           <h1 className="text-3xl font-bold text-[#37474F]">
             Gestion des Utilisateurs
           </h1>
@@ -54,6 +56,8 @@ export default function Users() {
           onClick={() => setIsFormOpen(true)}
           className="flex items-center bg-[#704232] hover:bg-amber-800 text-white px-4 py-2 rounded shadow-md"
         >
+            <FiPlus className="mr-2" />
+        
           Ajouter un utilisateur
         </button>
       </div>

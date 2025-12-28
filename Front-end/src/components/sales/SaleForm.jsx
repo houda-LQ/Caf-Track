@@ -1,7 +1,7 @@
 // src/components/sales/SaleForm.jsx
 import { useState, useEffect } from "react";
 import { useSalesStore } from "../../store/salesStore";
-import { useProductStore } from "../../store/productStore"; // pour récupérer la liste des produits
+import { useProductStore } from "../../store/productStore";
 
 export default function SaleForm({ onClose }) {
   const { createSale } = useSalesStore();
@@ -15,10 +15,9 @@ export default function SaleForm({ onClose }) {
   });
 
   useEffect(() => {
-    fetchProducts(); // récupère la liste des produits au chargement
+    fetchProducts();
   }, []);
 
-  // Quand on change le produit, mettre à jour le prix unitaire
   const handleProductChange = (e) => {
     const selectedId = e.target.value;
     const selectedProduct = products.find((p) => p.id === Number(selectedId));
@@ -31,7 +30,6 @@ export default function SaleForm({ onClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!form.product_id || !form.client_name || form.quantity <= 0) {
       alert("Veuillez remplir tous les champs correctement.");
       return;
@@ -43,7 +41,6 @@ export default function SaleForm({ onClose }) {
         client_name: form.client_name,
         quantity: Number(form.quantity),
       };
-
       await createSale(payload);
       onClose();
     } catch (error) {
@@ -54,57 +51,80 @@ export default function SaleForm({ onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white w-full max-w-lg p-6 rounded-lg shadow-lg">
-        <h2 className="text-xl font-bold mb-4">Nouvelle Vente</h2>
+      <div className="bg-white w-full max-w-md p-6 rounded-xl shadow-2xl">
+        <h2 className="text-2xl font-bold mb-6 text-gray-800">Nouvelle Vente</h2>
 
         <form className="grid gap-4" onSubmit={handleSubmit}>
-          {/* Select produit */}
-          <select
-            value={form.product_id}
-            onChange={handleProductChange}
-            className="border px-3 py-2 rounded"
-          >
-            <option value="">Sélectionnez un produit</option>
-            {products.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.name} (Stock: {p.quantity})
-              </option>
-            ))}
-          </select>
+          {/* Produit */}
+          <div className="flex flex-col">
+            <label htmlFor="product" className="mb-1 font-medium text-gray-700">Produit</label>
+            <select
+              id="product"
+              value={form.product_id}
+              onChange={handleProductChange}
+              className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
+            >
+              <option value="">Sélectionnez un produit</option>
+              {products.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name} (Stock: {p.quantity})
+                </option>
+              ))}
+            </select>
+          </div>
 
-          {/* Prix unitaire (lecture seule) */}
-          <input
-            type="number"
-            placeholder="Prix unitaire"
-            value={form.unit_price}
-            readOnly
-            className="border px-3 py-2 rounded bg-gray-100"
-          />
+          {/* Prix unitaire */}
+          <div className="flex flex-col">
+            <label htmlFor="unit_price" className="mb-1 font-medium text-gray-700">Prix Unitaire</label>
+            <input
+              type="number"
+              id="unit_price"
+              placeholder="Prix unitaire"
+              value={form.unit_price}
+              readOnly
+              className="border border-gray-300 rounded-lg px-4 py-2 bg-gray-100 text-gray-700"
+            />
+          </div>
 
           {/* Quantité */}
-          <input
-            type="number"
-            placeholder="Quantité"
-            value={form.quantity}
-            className="border px-3 py-2 rounded"
-            onChange={(e) => setForm({ ...form, quantity: e.target.value })}
-          />
+          <div className="flex flex-col">
+            <label htmlFor="quantity" className="mb-1 font-medium text-gray-700">Quantité</label>
+            <input
+              type="number"
+              id="quantity"
+              placeholder="Quantité"
+              value={form.quantity}
+              onChange={(e) => setForm({ ...form, quantity: e.target.value })}
+              className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
+            />
+          </div>
 
-          {/* Nom client */}
-          <input
-            type="text"
-            placeholder="Client"
-            value={form.client_name}
-            className="border px-3 py-2 rounded"
-            onChange={(e) => setForm({ ...form, client_name: e.target.value })}
-          />
+          {/* Client */}
+          <div className="flex flex-col">
+            <label htmlFor="client_name" className="mb-1 font-medium text-gray-700">Client</label>
+            <input
+              type="text"
+              id="client_name"
+              placeholder="Nom du client"
+              value={form.client_name}
+              onChange={(e) => setForm({ ...form, client_name: e.target.value })}
+              className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
+            />
+          </div>
 
           {/* Boutons */}
-          <div className="flex justify-end space-x-3 mt-2">
-            <button type="button" onClick={onClose} className="px-4 py-2 rounded border">
+          <div className="flex justify-end space-x-3 mt-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition"
+            >
               Annuler
             </button>
-            <button type="submit" className="bg-[#704232] text-white px-4 py-2 rounded">
+            <button
+              type="submit"
+              className="bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition shadow-md"
+            >
               Enregistrer
             </button>
           </div>

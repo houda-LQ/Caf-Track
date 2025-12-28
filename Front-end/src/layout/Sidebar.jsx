@@ -1,39 +1,46 @@
-// src/layout/Sidebar.jsx
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   FiHome,
   FiBox,
   FiShoppingCart,
   FiUsers,
-  FiSettings,
+  FiBriefcase,
   FiLogOut,
   FiTruck,
 } from "react-icons/fi";
 import logo from "../assets/logo.png";
-
-const navItems = [
-  { name: "Dashboard", icon: <FiHome />, path: "/dashboard" },
-  { name: "Produits", icon: <FiBox />, path: "/products" },
-  { name: "Ventes", icon: <FiShoppingCart />, path: "/sales" },
-  { name: "Fournisseurs & Achats", icon: <FiTruck />, path: "/suppliers" },
-  { name: "Gestion des Utilisateurs", icon: <FiUsers />, path: "/users" },
-];
+import { useAuthStore } from "../store/authStore";
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const { user } = useAuthStore(); // récupérer l'utilisateur connecté
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/"); 
+    localStorage.removeItem("user");
+    navigate("/");
   };
 
-  const goToSettings = () => {
-    navigate("/settings"); 
-  };
+  // Liste des items, filtrer Users si pas admin
+  const navItems = [
+    { name: "Dashboard", icon: <FiHome />, path: "/dashboard" },
+    { name: "Produits", icon: <FiBox />, path: "/products" },
+    { name: "Ventes", icon: <FiShoppingCart />, path: "/sales" },
+    { name: "Fournisseurs", icon: <FiBriefcase />, path: "/suppliers" },
+    { name: "Achats", icon: <FiTruck />, path: "/purchases" },
+  ];
+
+  // Ajouter Users seulement si admin
+  if (user?.role === "admin") {
+    navItems.push({
+      name: "Gestion des Utilisateurs",
+      icon: <FiUsers />,
+      path: "/users",
+    });
+  }
 
   return (
     <aside className="w-20 bg-[#37474F] flex flex-col items-center py-6">
-
       {/* Logo */}
       <div className="flex justify-center mb-6">
         <div className="bg-white p-2 rounded-full shadow-md">
@@ -57,22 +64,14 @@ export default function Sidebar() {
         </NavLink>
       ))}
 
-      {/* Paramètres & Déconnexion */}
+      {/* Déconnexion */}
       <div className="mt-auto flex flex-col items-center w-full space-y-4">
-        <button
-          onClick={goToSettings}
-          className="flex flex-col items-center justify-center w-full h-16 text-white hover:bg-[#455A64]"
-          title="Paramètres"
-        >
-          <FiSettings  />
-        </button>
-
         <button
           onClick={handleLogout}
           className="flex flex-col items-center justify-center w-full h-16 text-white hover:bg-[#455A64]"
           title="Déconnexion"
         >
-          <FiLogOut  />
+          <FiLogOut />
         </button>
       </div>
     </aside>
