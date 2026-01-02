@@ -7,7 +7,6 @@ export const useUsersStore = create((set) => ({
   loading: false,
   error: null,
 
-  // Récupérer tous les utilisateurs
   fetchUsers: async () => {
     set({ loading: true, error: null });
     try {
@@ -22,7 +21,6 @@ export const useUsersStore = create((set) => ({
     }
   },
 
-  // Créer un utilisateur
   createUser: async (data) => {
     set({ loading: true, error: null });
     try {
@@ -44,7 +42,6 @@ export const useUsersStore = create((set) => ({
     }
   },
 
-  // Mettre à jour un utilisateur
   updateUser: async (id, data) => {
     set({ loading: true, error: null });
     try {
@@ -60,7 +57,6 @@ export const useUsersStore = create((set) => ({
     }
   },
 
-  // Supprimer un utilisateur
   deleteUser: async (id) => {
     set({ loading: true, error: null });
     try {
@@ -70,7 +66,6 @@ export const useUsersStore = create((set) => ({
         totals: {
           ...state.totals,
           total_users: state.totals.total_users - 1,
-          // recalculer admins/employés 
         },
         loading: false,
       }));

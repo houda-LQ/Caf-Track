@@ -7,7 +7,6 @@ export const useDashboardStore = create((set) => ({
   charts: {},               
   stocksFaibles: [],         
 
-  // fonction pour récupérer les données du dashboard
   fetchDashboard: async () => {
     set({ loading: true });  
     try {

@@ -40,6 +40,47 @@ class SaleController extends Controller
     return response()->json($sales, 200);
 }
 
+
+public function store(StoreSaleRequest $request)
+{
+    $user = auth()->user();
+    $this->authorize('create', Sale::class);
+
+    $data = $request->validated();
+
+    $product = Product::findOrFail($data['product_id']);
+
+    $total = $product->sale_price * $data['quantity'];
+    $margin = $product->margin * $data['quantity'];
+
+    if ($data['quantity'] > $product->quantity) {
+        return response()->json([
+            'message' => 'Quantité insuffisante en stock'
+        ], 400);
+    }
+
+    $sale = Sale::create([
+        'product_id'  => $data['product_id'],
+        'client_name' => $data['client_name'],
+        'quantity'    => $data['quantity'],
+        'unit_price'  => $product->sale_price,
+        'total'       => $total,
+        'margin'      => $margin,
+        'sale_date'   => now(),
+        'created_by'  => $user->id,
+    ]);
+
+    $product->quantity -= $data['quantity'];
+    $product->save();
+
+    return response()->json([
+        'message' => 'Vente créée avec succès',
+        'sale' => $sale
+    ], 201);
+}
+
+
+
 public function dashboardStats(Request $request)
 {
     $user = auth()->user();

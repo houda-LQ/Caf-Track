@@ -7,12 +7,12 @@ export const usePurchaseStore = create((set) => ({
   loading: false,
 
   fetchPurchases: async () => {
-    const { user } = useAuthStore.getState(); // utilisateur connecté
+    const { user } = useAuthStore.getState(); 
     set({ loading: true });
 
     try {
       const res = await api.get("/purchases/list"); 
-      // le backend filtrera selon le rôle
+
       set({ purchases: res.data, loading: false });
     } catch (err) {
       console.error("Erreur fetchPurchases:", err);

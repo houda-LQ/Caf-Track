@@ -4,7 +4,7 @@ import api from "../lib/axios";
 export const useSalesStore = create((set) => ({
   sales: [],
   stats: { nombre_ventes: 0, chiffre_affaires: 0, benefice_net: 0 },
-  error: null, // juste pour gérer les erreurs
+  error: null, 
 
   fetchSales: async (filter = "all") => {
     try {

@@ -25,6 +25,7 @@ class StoreSaleRequest extends FormRequest
             'product_id' => 'required|exists:products,id',
             'client_name' => 'required|string',
             'quantity' => 'required|integer|min:1',
+            
         ];
     }
 }

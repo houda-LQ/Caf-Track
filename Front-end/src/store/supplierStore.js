@@ -6,7 +6,6 @@ export const useSupplierStore = create((set) => ({
   loading: false, 
   error: null,    
 
-  // Récupérer tous les fournisseurs
   fetchSuppliers: async () => {
     set({ loading: true, error: null });
     try {
@@ -18,7 +17,6 @@ export const useSupplierStore = create((set) => ({
     }
   },
 
-  // Créer un fournisseur
   createSupplier: async (data) => {
     set({ loading: true, error: null });
     try {
@@ -33,7 +31,6 @@ export const useSupplierStore = create((set) => ({
     }
   },
 
-  // Mettre à jour un fournisseur
   updateSupplier: async (id, data) => {
     set({ loading: true, error: null });
     try {
@@ -50,7 +47,6 @@ export const useSupplierStore = create((set) => ({
     }
   },
 
-  // Supprimer un fournisseur
   deleteSupplier: async (id) => {
     set({ loading: true, error: null });
     try {
